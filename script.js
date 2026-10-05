@@ -395,7 +395,8 @@ function route() {
   app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
   $$('nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (page === 'project' ? 'projects' : page === 'game' ? 'games' : page)));
   $('#menu').classList.remove('open');
-  document.title = (page === 'home' ? 'Protik Sutar' : page[0].toUpperCase() + page.slice(1) + ' | Protik Sutar') + ' | CSE Student';
+  document.title = (page === 'home' ? 'Protik Sutar' : page[0].toUpperCase() + page.slice(1) + ' | Protik Sutar');
+  
   scrollTo(0, 0);
   initPage();
 }
