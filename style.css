@@ -292,3 +292,60 @@ a.game{display:block;color:var(--text)}
     text-decoration: none;
     display: inline-block;
 }
+
+@media(max-width:700px){
+  html{scroll-padding-top:76px}
+  .nav{top:10px;width:calc(100% - 20px);padding:.55rem .8rem}
+  .nav .burger{display:block;order:-1;flex:none}
+  .nav .logo{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+  .nav nav{top:58px;max-height:calc(100vh - 82px);overflow-y:auto;overscroll-behavior:contain;background:var(--bg2);border-color:var(--border);box-shadow:var(--shadow);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .nav nav a{padding:.65rem .85rem}
+  .hero{width:90%;min-height:0;padding:7rem 0 2.5rem;gap:1rem}
+  .hero-text{min-width:0}
+  .big{font-size:clamp(2rem,10vw,3rem)}
+  .tagline{letter-spacing:.1em}
+  .lead{font-size:.98rem}
+  .stage{width:min(76%,320px);margin-top:1rem}
+  .orbit{width:132%}
+  .sec{width:90%;padding:3.5rem 0 .5rem}
+  #app>.sec:first-child{padding-top:7rem}
+  .grid.two,.grid.three,.grid.four,.pd-more{grid-template-columns:minmax(0,1fr)}
+  .grid{gap:1rem}
+  .card{padding:1.2rem}
+  .tools{gap:.7rem}
+  .tool{width:68px}
+  .stats{gap:1rem}
+  .games{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem}
+  .game{padding:1rem .7rem}
+  .gl{width:100px;height:100px;border-radius:24px}
+  .shots{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.8rem}
+  .pshots .shot.wide{grid-column:auto;aspect-ratio:4/5}
+  .gd-info{grid-template-columns:minmax(0,1fr);gap:.8rem;padding:1.1rem}
+  .gd-head{gap:1rem}
+  .pd-title{font-size:clamp(1.7rem,8vw,2.5rem);overflow-wrap:anywhere}
+  .pd-desc{font-size:1rem}
+  .filters{gap:.45rem}
+  .filters button{padding:.45rem .8rem}
+  .pdf-frame{height:65vh;min-height:380px}
+  .resume-buttons .btn{padding:10px 16px}
+  .lb-x{top:12px;right:12px}
+  .lb-n{width:40px;height:40px}
+  .prev{left:8px}.next{right:8px}
+  .lightbox figure{max-width:calc(100vw - 72px)}
+  .foot{padding:3rem 1rem 1.5rem}
+}
+
+@media(max-width:420px){
+  .nav .logo{font-size:1rem}
+  .theme,.burger{width:36px;height:36px}
+  .hero{padding-top:6.5rem}
+  .cta .btn{padding:.7rem 1rem}
+  .stats{gap:.7rem}
+  .stats b{font-size:1.5rem}
+  .games{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shots{grid-template-columns:minmax(0,1fr)}
+  .shot figcaption{font-size:.72rem}
+  .resume-bar .btn{flex:1;text-align:center}
+  .lb-n{top:auto;bottom:16px;transform:none}
+  .lb-x{width:40px;height:40px}
+}

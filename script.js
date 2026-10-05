@@ -4,7 +4,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* =====================  YOUR DATA (edit here)  ===================== */
-const ME = { mail: '', phone: '01828443129', tel: '+8801828443129' };
+const ME = { mail: 'mr.protiksutar@gmail.com', phone: '01828443129', tel: '+8801828443129' };
 
 /* Logos load from the internet (jsDelivr devicon + Simple Icons). If one can't load, a text badge shows instead. */
 const DEV = (f, v = 'original') => `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${f}/${f}-${v}.svg`;
@@ -303,8 +303,12 @@ const contactFull = (compact = false) => `
       <li><span>Location</span>Barishal 8200, Bangladesh</li>
     </ul><button class="btn" id="copy">Copy email</button></div>
   <div class="glass card reveal"><h4>Send a message</h4>
-    <div class="form"><input id="fName" placeholder="Your name" autocomplete="name"><input id="fMail" type="email" placeholder="Your email" autocomplete="email">
-    <textarea id="fMsg" rows="4" placeholder="Your message"></textarea><button class="btn primary" id="send">Send message</button><p class="status" id="status" role="status"></p></div></div>
+    <form class="form" id="contactForm"><input id="fName" name="name" placeholder="Your name" autocomplete="name" required maxlength="120">
+    <input id="fMail" name="email" type="email" placeholder="Your email" autocomplete="email" required maxlength="254">
+    <textarea id="fMsg" name="message" rows="4" placeholder="Your message" required minlength="5" maxlength="5000"></textarea>
+    <input type="hidden" name="_subject" value="New portfolio message">
+    <input type="hidden" name="_replyto" value="">
+    <button class="btn primary" id="send" type="submit">Send message</button><p class="status" id="status" role="status" aria-live="polite"></p></form></div>
 </div>
 ${compact
   ? `<div class="socs reveal">${SOCIALS.map(s => `<a href="${s.u}" ${s.u.startsWith('http') ? 'target="_blank" rel="noopener"' : ''} aria-label="${s.n}" title="${s.n}">${lg(s)}</a>`).join('')}</div>`
@@ -380,6 +384,7 @@ function route() {
   app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
   $$('nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (page === 'project' ? 'projects' : page === 'game' ? 'games' : page)));
   $('#menu').classList.remove('open');
+  $('#burger').setAttribute('aria-expanded', 'false');
   document.title = (page === 'home' ? 'Protik Sutar' : page[0].toUpperCase() + page.slice(1) + ' | Protik Sutar');
   
   scrollTo(0, 0);
@@ -503,7 +508,10 @@ addEventListener('pointermove', e => { const g = $('#glow'); g.style.left = e.cl
 const root = document.documentElement;
 try { const s = localStorage.getItem('theme'); if (s) root.dataset.theme = s; } catch (_) {}
 $('#theme').onclick = () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('theme', root.dataset.theme); } catch (_) {} };
-$('#burger').onclick = () => $('#menu').classList.toggle('open');
+$('#burger').onclick = () => {
+  const open = $('#menu').classList.toggle('open');
+  $('#burger').setAttribute('aria-expanded', String(open));
+};
 
 let tt;
 function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2200); }
@@ -538,13 +546,38 @@ app.addEventListener('click', async e => {
   const ct = e.target.closest('.cert'); if (ct) { e.preventDefault(); return lbOpen(CERTS.map(c => ({ src: c.file, cap: c.title })), +ct.dataset.i); }
   const shot = e.target.closest('.shot'); if (shot) return openShot(shot);
   if (e.target.id === 'copy') { try { await navigator.clipboard.writeText(ME.mail); toast('Email copied'); } catch (_) { toast('Copy failed. Select the email and copy it.'); } }
-  if (e.target.id === 'send') {
-    const n = $('#fName').value.trim(), m = $('#fMail').value.trim(), msg = $('#fMsg').value.trim(), st = $('#status');
-    st.classList.remove('err');
-    if (!n || !/^\S+@\S+\.\S+$/.test(m) || msg.length < 5) { st.classList.add('err'); st.textContent = 'Enter your name, a valid email and a message.'; return; }
-    location.href = `mailto:${ME.mail}?subject=${encodeURIComponent('Portfolio message from ' + n)}&body=${encodeURIComponent(msg + '\n\nFrom: ' + n + ' (' + m + ')')}`;
-    st.textContent = 'Opening your email app...'; toast('Message ready to send');
-  }
+});
+app.addEventListener('submit', async e => {
+ const form = e.target.closest('#contactForm');
+ if (!form) return;
+ e.preventDefault();
+ if (!form.reportValidity()) return;
+
+ const status = $('#status', form), button = $('#send', form), data = new FormData(form);
+ data.set('_replyto', data.get('email'));
+ status.classList.remove('err');
+ status.textContent = 'Sending your message...';
+ button.disabled = true;
+
+ try {
+   const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(ME.mail)}`, {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+     body: JSON.stringify(Object.fromEntries(data.entries()))
+   });
+   const result = await response.json();
+   if (!response.ok || result.success !== 'true') {
+     throw new Error(result.message || `Email service returned HTTP ${response.status}.`);
+   }
+   form.reset();
+   status.textContent = 'Message sent successfully. Thank you!';
+   toast('Message sent');
+ } catch (error) {
+   status.classList.add('err');
+   status.textContent = `Could not send your message: ${error.message} Please try again or email ${ME.mail} directly.`;
+ } finally {
+   button.disabled = false;
+ }
 });
 app.addEventListener('keydown', e => { const s = e.target.closest('.shot'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openShot(s); } });
 
