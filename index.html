@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protik Sutar | CSE Student</title>
+<meta name="description" content="Portfolio of Protik Sutar, Computer Science & Engineering student.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="glow" id="glow" aria-hidden="true"></div>
+<div class="floaters" id="floaters" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+
+<header class="nav glass">
+  <a href="#/home" class="logo">&lt;Protik<span>/&gt;</span></a>
+  <button class="burger" id="burger" aria-label="Toggle menu">&#9776;</button>
+  <nav id="menu">
+    <a href="#/home" data-r="home">Home</a>
+    <a href="#/about" data-r="about">About</a>
+    <a href="#/skills" data-r="skills">Skills</a>
+    <a href="#/projects" data-r="projects">Projects</a>
+    <a href="#/education" data-r="education">Education</a>
+    <a href="#/games" data-r="games">Games</a>
+    <a href="#/gallery" data-r="gallery">Gallery</a>
+    <a href="#/resume" data-r="resume">Resume</a>
+    <a href="#/contact" data-r="contact">Contact</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Switch theme">&#9680;</button>
+</header>
+
+<main id="app"></main>
+
+<footer class="foot mono"> <p>Copyright &copy; <span id="year"></span> Protik. All rights reserved.</p></footer>
+
+<button class="top glass" id="top" aria-label="Back to top">&uarr;</button>
+<div class="toast glass" id="toast"></div>
+
+<div class="lightbox" id="lb" hidden>
+  <button class="lb-x" id="lbX" aria-label="Close">&times;</button>
+  <button class="lb-n prev" id="lbP" aria-label="Previous">&#8249;</button>
+  <figure><div id="lbImg"></div><figcaption id="lbCap" class="mono"></figcaption></figure>
+  <button class="lb-n next" id="lbN" aria-label="Next">&#8250;</button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
