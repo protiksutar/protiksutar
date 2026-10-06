@@ -288,8 +288,8 @@ const gamePage = id => {
   const row = (l, v) => `<li><span>${l}</span>${v ? `<b>${v}</b>` : '<em>Add in script.js</em>'}</li>`;
   const shotsHtml = [['-id', 'Game ID screenshot'], ['-2', 'Screenshot']].map(([suf, cap]) => `<figure class="shot glass reveal" tabindex="0">${pic('images/games/' + g.f + suf, g.n + ' ' + cap, 'ph')}<figcaption class="mono">${g.n} - ${cap}</figcaption></figure>`).join('');
   return `<section class="sec"><a href="#/games" class="back mono">&larr; All games</a>
-  <div class="gd-head">${gameLogo(g)}<div><h2 class="pd-title">${g.n}</h2><p class="pd-desc">${info.note || 'My game ID and profile details.'}</p></div></div>
-  <ul class="gd-info glass reveal">${row('Game ID', info.uid)}${row('In-game name', info.ign)}${row('Rank / level', info.rank)}</ul>
+  <div class="gd-head">${gameLogo(g)}<div><h2 class="pd-title">${g.n}</h2><p class="pd-desc">${info.note || ''}</p></div></div>
+  
   <h3 class="title mono">screenshots/</h3><div class="shots pshots gshots">${shotsHtml}</div>
   <div class="cta">${go('games', 'All games', 'btn line')}${go('game/' + nx.f, 'Next: ' + nx.n, 'btn solid')}</div></section>`;
 };
@@ -315,7 +315,7 @@ ${compact
   : `<div class="socgrid">${SOCIALS.map(s => `<a class="socbtn glass reveal" href="${s.u}" ${s.u.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>${lg(s, 'sm')}<span>${s.n}<small>${s.h}</small></span></a>`).join('')}</div>`}`;
 
 const shots = (f = 'all') => `<div class="shots">${GALLERY.filter(g => f === 'all' || g.cat === f).map(g => `<figure class="shot glass reveal" tabindex="0">${pic(g.base, g.cap, g.cat === 'projects' ? 'fig' : 'ph')}<figcaption class="mono">${g.cap}</figcaption></figure>`).join('')}</div>`;
-const galleryFull = () => `<div class="filters" id="gFilters"><button class="on" data-f="all">All</button><button data-f="personal">Personal</button><button data-f="projects">Projects</button></div><div id="gWrap">${shots()}</div><p class="note mono">Project photos appear here after you add them to images/projects/.</p>`;
+const galleryFull = () => `<div class="filters" id="gFilters"><button class="on" data-f="all">All</button><button data-f="personal">Personal</button><button data-f="projects">Projects</button></div><div id="gWrap">${shots()}</div>`;
 
 const dsec = (t, inner, cls = '') => `<div class="glass card dsec reveal ${cls}"><h4>${t}</h4>${inner}</div>`;
 const dlist = (arr, cls = '') => `<ul class="dlist ${cls}">${(arr || []).map(x => `<li>${x}</li>`).join('')}</ul>`;
